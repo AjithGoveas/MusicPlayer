@@ -1,0 +1,67 @@
+/* Sidebar Styling */
+.sidebar {
+    width: 360px;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    /* padding: 20px; */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    background-color: var(--accent-1-color);
+}
+
+.profile h2 {
+    font-size: 1em;
+}
+
+.profile p {
+    font-size: 0.9rem;
+    color: var(--accent-2-color);
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding-left: 20px;
+    width: 100%;
+}
+  
+.sidebar-nav li {
+    margin: 10px 0;
+}
+  
+.sidebar-nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    display: block;
+}
+
+.logout-button {
+    margin-top: auto;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: var(--danger-color);
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.logout-button:hover {
+    background-color: #e5383bc7;
+}

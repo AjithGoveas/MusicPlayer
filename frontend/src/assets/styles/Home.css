@@ -1,0 +1,7 @@
+/* Home.css */
+
+/* General Styling */
+.home {
+    display: flex;
+    height: 100vh;
+  }
