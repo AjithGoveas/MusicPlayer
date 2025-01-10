@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css');
 
 body {
   margin: 0;
@@ -25,13 +26,20 @@ code {
   border: none;
   outline: none;
   scroll-behavior: smooth;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font);
 }
 
 :root{
-  --h1-font: 5rem;
-  --h2-font: 2rem;
-  --p-font: 1.1rem;
+  --font: 'Poppins', sans-serif;
+  --h1-font: 48px;
+  --h2-font: 44px;
+  --h3-font: 36px;
+  --h4-font: 32px;
+  --h5-font: 28px;
+  --h6-font: 24px;
+  --p-font: 16px;
+  --small-font: 13.33px;
+  --other-font: 11.11px;
 
   --bg-color: #252422;
   --main-color: #eb5e28;
@@ -43,4 +51,6 @@ code {
 
 section{
   padding: 60px 8% 50px;
+  /* padding: 10px 2% 5px; */
+  /* margin: 40px 0 0 0; */
 }

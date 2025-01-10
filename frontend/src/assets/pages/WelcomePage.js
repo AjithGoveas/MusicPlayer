@@ -1,26 +1,31 @@
-import React, { useState } from 'react';
-import Header from '../components/Header';
-import Login from '../components/Login';
+import React, { useState } from "react";
+import Header from "../components/Header";
+import Login from "../components/Login";
+import "../styles/WelcomePage.css";
 
-const WelcomePage = () => {
-  const [isLoginVisible, setIsLoginVisible] = useState(false);
+const WelcomePage = ({ user }) => {
+  const [isLoginVisible, setLoginVisible] = useState(false); // Destructured for cleaner syntax
 
-  const handleLoginClick = () => {
-    setIsLoginVisible(true);
-  };
-
+  // Handlers for showing and hiding the login modal
+  const showLogin = () => setLoginVisible(true);
+  const hideLogin = () => setLoginVisible(false);
   const closeLoginForm = () => {
-    setIsLoginVisible(false);
+    setLoginVisible(false); // Set state to hide the login form
   };
 
   return (
-    <div>
-      <Header onLoginClick={handleLoginClick} />
-      {isLoginVisible && <Login onClose={closeLoginForm} />}
-      <main>
-        {/* Other welcome page content */}
-      </main>
-      
+    <div className="welcome-page">
+      {/* Header with login toggle */}
+      {/* <Header onLoginClick={showLogin} /> */}
+
+      {/* Login modal, rendered conditionally */}
+      {/* {isLoginVisible && (
+        <Login
+          setUser={user}
+          onHideLogin={hideLogin}
+          onClose={closeLoginForm}
+        />
+      )} */}
     </div>
   );
 };

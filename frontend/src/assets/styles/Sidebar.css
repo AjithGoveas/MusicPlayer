@@ -1,11 +1,16 @@
 /* Sidebar Styling */
 .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 360px;
+    height: 100vh;
     background-color: var(--bg-color);
     display: flex;
     flex-direction: column;
     /* padding: 20px; */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .profile {
@@ -25,11 +30,11 @@
 }
 
 .profile h2 {
-    font-size: 1em;
+    font-size: var(--h6-font);
 }
 
 .profile p {
-    font-size: 0.9rem;
+    font-size: var(--p-font);
     color: var(--accent-2-color);
 }
 
@@ -45,10 +50,20 @@
   
 .sidebar-nav a {
     text-decoration: none;
-    color: #ffffff;
-    font-size: 1.1rem;
+    color: var(--text-color);
+    font-size: var(--h6-font);
     padding: 10px 20px;
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    transition: 0.2s ease-in;
+}
+
+.sidebar-nav a i{
+    margin-right: 10px;
+}
+.sidebar-nav a:hover {
+    transform: scale(1.02);
+    color: var(--main-color);
 }
 
 .logout-button {
@@ -58,10 +73,10 @@
     background-color: var(--danger-color);
     border: none;
     color: var(--text-color);
-    font-size: 1rem;
+    font-size: var(--h6-font);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 .logout-button:hover {
-    background-color: #e5383bc7;
+    background-color: #e5383be0;
 }

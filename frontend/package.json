@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-oauth/google": "^0.12.1",
+    "axios": "^1.7.9",
     "cra-template": "^1.2.0",
     "isexe": "^3.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1",
     "react-scripts": "^5.0.1",
+    "react-youtube": "^10.1.0",
     "webpack": "^5.97.1"
   },
   "scripts": {
@@ -37,6 +40,7 @@
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
+  "proxy": "http://localhost:5000",
   "keywords": [],
   "author": "",
   "license": "ISC",

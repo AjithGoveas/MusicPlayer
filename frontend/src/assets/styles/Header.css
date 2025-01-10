@@ -4,7 +4,7 @@ header{
     left: 0;
     width: 100%;
     padding: 20px 5%;
-    background: transparent;
+    /* background: var(--bg-color); */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,17 +34,30 @@ header.sticky{
     width: 100%; /* Ensure the navbar spans the page */
 }
 
-#navbar .nav-link{
+#navbar .nav-item{
     position: relative;
-    font-size: var(--p-font);
-    color: var(--other-color);
     text-decoration: none;
     font-weight: 400;
     margin-left: 40px;
+}
+
+#navbar .nav-item i {
+    margin-right: 5px;
+}
+
+#navbar .nav-item a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    font-size: 1.1em;
+    font-weight: 500;
+    text-decoration: none;
     transition: all 0.4s ease;
 }
-#navbar .nav-link:hover{
-    color: var(--text-color);
+
+#navbar .nav-item a:hover{
+    color: var(--main-color);
 }
 
 #menu-icon{
@@ -56,11 +69,11 @@ header.sticky{
     display: none;
 }
 
-.login {
+.login, .logout {
     color: var(--text-color);
     font-size: 1.1em;
     font-weight: 500;
-    margin-left: 40px;
+    /* margin-left: 40px; */
     width: 130px;
     height: 50px;
     outline: none;
@@ -71,7 +84,14 @@ header.sticky{
     transition: 0.4s ease;
 }
 
-.login:hover{
+.login:hover, .logout:hover{
     background: var(--main-color);
     color: var(--text-color);
+}
+
+.settings-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid var(--main-color);
 }

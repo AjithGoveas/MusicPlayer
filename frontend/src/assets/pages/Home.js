@@ -1,128 +1,181 @@
 // Home.js
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import PlayBar from "../components/PlayBar"; // Import PlayBar component
+import { useAuth } from "../context/AuthContext"; // Import useAuth hook
+import { fetchRecentTracks, fetchTopSongs, fetchTopPodcasts, fetchPlaylists } from "../services/youTubeMusicService"; // Import YouTube API service
 import "../styles/Home.css";
 import "../styles/Sidebar.css";
 import "../styles/MainContent.css";
 
-const Sidebar = ({ user }) => {
-  const navigate = useNavigate();
+const scrollContainer = (direction, containerRef) => {
+  if (direction === "left") {
+    containerRef.current.scrollBy({ left: -300, behavior: "smooth" });
+  } else {
+    containerRef.current.scrollBy({ left: 300, behavior: "smooth" });
+  }
+};
 
-  const handleLogout = () => {
-    // Add your logout logic here
-    console.log("Logout Successful!");
-    navigate("/"); // Navigate to the Welcome page
-  };
+const ScrollButton = ({ direction, onClick }) => (
+  <button
+    className={`scroll-button scroll-button-${direction}`}
+    onClick={onClick}
+  >
+    {direction === "left" ? (
+      <i className="bx bx-chevron-left" />
+    ) : (
+      <i className="bx bx-chevron-right" />
+    )}
+  </button>
+);
+
+const PlaceholderItem = ({ onPlayPause, isPlaying, trackId, currentTrack, name, artist, thumbnail }) => {
   return (
-    <div className="sidebar">
-      <div className="profile">
-        <div
-          src={user.profilePicture}
-          alt="Profile"
-          className="profile-picture"
-        />
-        <div className="profile-info">
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-        </div>
+    <div className="card">
+      <div className="card__image" style={{ backgroundImage: `url(${thumbnail})` }}>
+        <button className="play-button" onClick={onPlayPause}>
+          {isPlaying && currentTrack === trackId ? (
+            <i className="bx bx-pause" />
+          ) : (
+            <i className="bx bx-play" />
+          )}
+        </button>
       </div>
-      <nav className="sidebar-nav">
-        <ul>
-          <li>
-            <Link to="/favorites">Favorites</Link>
-          </li>
-          <li>
-            <Link to="/playlists">Playlists</Link>
-          </li>
-          <li>
-            <Link to="/artists">Artists</Link>
-          </li>
-        </ul>
-      </nav>
-      <button className="logout-button" onClick={handleLogout}>
-        Logout
-      </button>
+      <div className="card__content">
+        <p className="name">{name}</p>
+        <p className="artist">{artist}</p>
+      </div>
     </div>
   );
 };
 
-const PlaceholderItem = () => (
-  <div className="item">
-    <div className="img" src="placeholder-art.jpg" alt="Placeholder Art" />
-    <p className="name">Placeholder Name</p>
-    <p className="artist">Placeholder Artist</p>
-    <i className="heart-icon fas fa-heart" />
-  </div>
-);
+const MainContent = ({ onPlayPause, isPlaying, currentTrack }) => {
+  const [recentTracks, setRecentTracks] = useState([]);
+  const [topSongs, setTopSongs] = useState([]);
+  const recentSectionRef = React.useRef(null);
+  const topSongsSectionRef = React.useRef(null);
 
-const MainContent = () => (
-  <div className="main-content">
-    <section className="greeting">
-      <h1>Welcome Back!</h1>
-      <p>Discover new music and enjoy your favorites.</p>
-    </section>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const recentTracksData = await fetchRecentTracks();
+        setRecentTracks(recentTracksData);
+        const topSongsData = await fetchTopSongs();
+        setTopSongs(topSongsData);
+      } catch (error) {
+        console.error("Error fetching data from YouTube Music API:", error);
+      }
+    };
 
-    <section className="recent-section">
-      <h2>Recent</h2>
-      <div className="grid">
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-      </div>
-    </section>
+    fetchData();
+  }, []);
 
-    <section className="top-songs-section">
-      <h2>Top Songs</h2>
-      <div className="grid">
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-      </div>
-    </section>
+  return (
+    <div className="main-content">
+      <section className="greeting">
+        <h1>Welcome Back!</h1>
+        <p>Discover new music and enjoy your favorites from YouTube Music.</p>
+      </section>
 
-    <section className="top-podcasts-section">
-      <h2>Top Podcasts</h2>
-      <div className="grid">
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-      </div>
-    </section>
+      <section className="recent-section">
+        <div className="sub-heading">
+          <h2>Recently Played</h2>
+          <div className="head-button">
+            <ScrollButton
+              direction="left"
+              onClick={() => scrollContainer("left", recentSectionRef)}
+            />
+            <ScrollButton
+              direction="right"
+              onClick={() => scrollContainer("right", recentSectionRef)}
+            />
+          </div>
+        </div>
+        <div className="container scroll" ref={recentSectionRef}>
+          {recentTracks.map((track) => (
+            <PlaceholderItem
+              key={track.id}
+              onPlayPause={() => onPlayPause(track.id)}
+              isPlaying={isPlaying}
+              trackId={track.id}
+              currentTrack={currentTrack}
+              name={track.title}
+              artist={track.channelTitle}
+              thumbnail={track.thumbnail.url}
+            />
+          ))}
+        </div>
+      </section>
 
-    <section className="playlists-section">
-      <h2>Your Playlists</h2>
-      <div className="grid">
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-        <PlaceholderItem />
-      </div>
-    </section>
-  </div>
-);
+      <section className="top-songs-section">
+        <div className="sub-heading">
+          <h2>Top Songs</h2>
+          <div className="head-button">
+            <ScrollButton
+              direction="left"
+              onClick={() => scrollContainer("left", topSongsSectionRef)}
+            />
+            <ScrollButton
+              direction="right"
+              onClick={() => scrollContainer("right", topSongsSectionRef)}
+            />
+          </div>
+        </div>
+        <div className="container scroll" ref={topSongsSectionRef}>
+          {topSongs.map((song) => (
+            <PlaceholderItem
+              key={song.id}
+              onPlayPause={() => onPlayPause(song.id)}
+              isPlaying={isPlaying}
+              trackId={song.id}
+              currentTrack={currentTrack}
+              name={song.title}
+              artist={song.channelTitle}
+              thumbnail={song.thumbnail.url}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+};
 
 const Home = () => {
-  const user = {
-    profilePicture: "user-profile.jpg",
-    name: "John Doe",
-    email: "johndoe@example.com",
+  const { user } = useAuth(); // Get user from AuthContext
+
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlayPause = (trackId) => {
+    if (currentTrack === trackId) {
+      setIsPlaying(!isPlaying);
+    } else {
+      setCurrentTrack(trackId);
+      setIsPlaying(true);
+    }
+  };
+
+  const handleNext = () => {
+    // Logic to handle the next track
+  };
+
+  const handlePrev = () => {
+    // Logic to handle the previous track
   };
 
   return (
     <div className="home">
-      <Sidebar user={user} />
-      <MainContent />
+      <MainContent
+        onPlayPause={handlePlayPause}
+        isPlaying={isPlaying}
+        currentTrack={currentTrack}
+      />
+      <PlayBar
+        currentTrack={currentTrack}
+        isPlaying={isPlaying}
+        onPlayPause={handlePlayPause}
+        onNext={handleNext}
+        onPrev={handlePrev}
+      />
     </div>
   );
 };

@@ -7,7 +7,7 @@
 
 .auth-container .auth-forms-wrapper {
     width: 400px;
-    height: 440px;
+    height: 480px;
     background: transparent;
     border: 2px solid var(--main-color);
     border-radius: 18px;
@@ -147,6 +147,33 @@
     font-size: 1em;
     color: var(--text-color);
     font-weight: 500;
+}
+
+.auth-button-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+    height: 45px;
+    background: transparent;
+    border: 1px solid var(--main-color);
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.auth-button-google i {
+margin-left: 10px;
+}
+
+.auth-button-google:hover {
+    background: var(--main-color);
+    color: var(--text-color);
 }
 
 .login-register {
